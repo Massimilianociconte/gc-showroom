@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="showroom-mode" content="static">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self' blob:; style-src 'self'; script-src 'self'; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+
+<title>GC General Contractor · Showroom</title>
+<link rel="icon" href="static/icona.svg" type="image/svg+xml">
+<link rel="preload" href="static/fonts/jost-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="static/fonts/cormorant-garamond-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="static/base.css">
+<link rel="stylesheet" href="static/tv.css">
+</head>
+<body class="is-loop">
+<video id="loop" muted playsinline loop autoplay preload="auto" disablepictureinpicture></video>
+<main id="stage" aria-live="polite"></main>
+<div id="chrome" aria-hidden="true">
+  <img class="tv-mark" src="static/marchio.svg" alt="">
+  <div class="tv-deck micro" id="deckTitle"></div>
+  <div class="tv-count micro" id="count"></div>
+</div>
+<aside id="hint" hidden>
+  <span class="micro accent">Telecomando</span>
+  <strong id="hintUrl"></strong>
+  <span id="hintPin" class="micro"></span>
+</aside>
+<script src="static/tv.js" defer></script>
+</body>
+</html>

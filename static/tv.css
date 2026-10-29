@@ -1,0 +1,135 @@
+/* Schermo della TV: 16:9 a qualsiasi risoluzione. Le misure sono in vw (1vw = 38,4 px a 4K, 19,2 px a Full HD). */
+html,body{width:100%;height:100%;overflow:hidden;background:var(--ink);cursor:none}
+body{--mx:6vw}
+#loop{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;background:var(--ink);transition:opacity 1.1s var(--ease)}
+body.is-show #loop{opacity:0}
+#stage{position:fixed;inset:0}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1s var(--ease);overflow:hidden;background:var(--ink)}
+.slide.in{opacity:1}
+.slide.out{opacity:0;transition-duration:.9s}
+
+/* immagine a tutto schermo con movimento lento (solo transform: composito) */
+.bleed{position:absolute;inset:0;overflow:hidden}
+.bleed img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:var(--ox,50%) var(--oy,50%);
+  animation:kb 26s linear forwards;will-change:transform}
+.slide.alt .bleed img{animation-name:kb-pan}
+@keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.1)}}
+@keyframes kb-pan{from{transform:scale(1.08) translateX(1.4%)}to{transform:scale(1.08) translateX(-1.4%)}}
+.paused .bleed img,.paused .panel img{animation-play-state:paused}
+.shade-bl::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(0deg,rgba(13,17,18,.72),rgba(13,17,18,.08) 55%,transparent 75%),linear-gradient(90deg,rgba(13,17,18,.5),transparent 60%)}
+.shade-b::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(13,17,18,.78),rgba(13,17,18,.1) 40%,transparent 60%)}
+
+/* testi */
+.copy{position:absolute;left:var(--mx);bottom:12vh;max-width:56vw;opacity:0;transform:translateY(1.6vh);
+  transition:opacity .9s .35s var(--ease),transform 1.2s .35s var(--ease)}
+.slide.in .copy{opacity:1;transform:none}
+.kicker{font-size:.95vw;font-weight:600;letter-spacing:.21em;text-transform:uppercase;color:var(--tiffany);margin:0 0 2.2vh}
+.kicker.light{color:var(--paper)}
+.title{font-weight:300;font-size:5vw;line-height:.96;letter-spacing:-.045em;margin:0}
+.title em{font-size:1.07em;letter-spacing:-.03em}
+.title.small{font-size:3.4vw}
+.text{font-size:1.3vw;line-height:1.45;font-weight:300;color:var(--warm);max-width:40vw;margin:3vh 0 0}
+.keys{font-size:1.15vw;letter-spacing:.02em;color:var(--stone);margin:2.2vh 0 0}
+.rule{display:block;width:11vw;height:.22vh;min-height:2px;background:var(--tiffany);margin:3vh 0;transform:scaleX(0);transform-origin:left;
+  transition:transform 1.2s .6s var(--ease)}
+.slide.in .rule{transform:none}
+
+/* fotografia verticale: immagine a destra a tutta altezza, testo a sinistra */
+.split{position:absolute;inset:0;display:grid;grid-template-columns:1fr auto}
+.split .panel{position:relative;height:100vh;overflow:hidden}
+.split .panel img{height:100%;width:auto;display:block;animation:kb-v 26s linear forwards;transform-origin:50% 40%}
+@keyframes kb-v{from{transform:scale(1.0)}to{transform:scale(1.06)}}
+.split .copy{position:relative;left:auto;bottom:auto;align-self:end;margin:0 4vw 12vh var(--mx);max-width:none}
+
+/* servizi: colonna di testo a sinistra, immagine a destra come nel video */
+.service{position:absolute;inset:0;display:grid;grid-template-columns:44.8vw 1fr}
+.service .copy{position:relative;left:auto;bottom:auto;align-self:center;margin:0 3vw 0 var(--mx);max-width:none}
+.service .panel{position:relative;overflow:hidden}
+.service .panel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 26s linear forwards}
+.service .title{font-size:4.2vw}
+.service ul{list-style:none;padding:0;margin:3.4vh 0 0;font-size:1.2vw;color:var(--warm)}
+.service li{padding:.9vh 0;border-top:1px solid var(--line)}
+.service li:last-child{border-bottom:1px solid var(--line)}
+.claim{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:2.4vw;margin:1.4vh 0 0;color:var(--paper)}
+
+/* prima e dopo */
+.compare .after{clip-path:inset(0 calc(100% - var(--x,50%)) 0 0)}
+.compare .bleed img{animation:kb-c 30s linear forwards}
+@keyframes kb-c{from{transform:scale(1.02)}to{transform:scale(1.07)}}
+.compare .line{position:absolute;top:0;bottom:0;left:var(--x,50%);width:.16vw;min-width:2px;background:var(--tiffany);transform:translateX(-50%)}
+.tag{position:absolute;top:14vh;padding:.7vh .9vw;background:rgba(23,29,30,.62);font-size:.85vw;font-weight:600;letter-spacing:.21em;text-transform:uppercase}
+.tag.before{right:var(--mx)}
+.tag.after{left:var(--mx)}
+
+/* metodo */
+.steps{position:absolute;left:var(--mx);right:var(--mx);bottom:7vh;display:grid;grid-template-columns:repeat(6,1fr);
+  font-size:.85vw;font-weight:600;letter-spacing:.19em;text-transform:uppercase}
+.steps span{opacity:.4;padding-bottom:1.4vh;position:relative}
+.steps span.on{opacity:1}
+.steps span.on::after{content:"";position:absolute;left:0;bottom:0;width:4.2vw;height:.2vh;min-height:2px;background:var(--tiffany)}
+.step .copy{bottom:17vh}
+
+/* elementi fissi della presentazione */
+#chrome{position:fixed;inset:0;pointer-events:none;opacity:0;transition:opacity .8s var(--ease)}
+body.is-show #chrome{opacity:1}
+.tv-mark{position:absolute;top:5.5vh;right:var(--mx);width:4.4vw;height:auto;opacity:.92}
+.tv-deck{position:absolute;top:6.2vh;left:var(--mx);font-size:.85vw;color:var(--paper);opacity:.8;letter-spacing:.21em}
+.tv-count{position:absolute;bottom:6.2vh;right:var(--mx);font-size:.85vw;color:var(--paper);opacity:.75;letter-spacing:.21em}
+body.hide-chrome #chrome{opacity:0}
+
+/* indicazione per collegare il telecomando (solo all'avvio o con il tasto «i») */
+#hint{position:fixed;right:var(--mx);bottom:6vh;display:flex;flex-direction:column;gap:.6vh;padding:1.6vh 1.4vw;background:rgba(23,29,30,.84);
+  border-left:.18vw solid var(--tiffany);font-size:1.05vw}
+#hint .micro{font-size:.75vw}
+#hint strong{font-weight:400;letter-spacing:.01em}
+
+@media (prefers-reduced-motion:reduce){
+  .bleed img,.split .panel img,.service .panel img{animation:none}
+}
+
+/* ── Sito statico (GitHub Pages): menu dei contenuti, tocco e mouse ── */
+body.static{cursor:default}
+body.static.idle{cursor:none}
+#explore{position:fixed;left:var(--mx);bottom:5.5vh;z-index:20;min-height:48px;padding:0 22px;border:1px solid rgba(243,241,235,.5);border-radius:999px;
+  background:rgba(23,29,30,.55);color:var(--paper);font:600 12px/1 "Jost",sans-serif;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;
+  transition:opacity .6s var(--ease)}
+body.idle #explore,body.menu-open #explore{opacity:0;pointer-events:none}
+body.is-show #explore{bottom:auto;top:4.6vh;left:50%;transform:translateX(-50%)}
+.menu{position:fixed;inset:0;z-index:30;overflow:auto;background:rgba(17,22,23,.96);padding:clamp(20px,4vw,72px) clamp(16px,6vw,230px) 120px;
+  -webkit-overflow-scrolling:touch;cursor:default}
+.menu-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:clamp(20px,4vh,48px)}
+.menu-top img{width:clamp(56px,4.4vw,120px);height:auto}
+.menu button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.menu-close{min-height:48px;padding:0 20px;border:1px solid var(--line)!important;border-radius:999px;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+.menu h2{font-size:clamp(11px,.85vw,22px);font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--tiffany);margin:clamp(24px,4vh,56px) 0 14px}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(150px,14vw,380px),1fr));gap:clamp(10px,1vw,24px)}
+.menu-card{display:flex;flex-direction:column;text-align:left;background:var(--graphite)!important;border-radius:4px;overflow:hidden;padding:0!important}
+.menu-card img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+.menu-card span{display:flex;flex-direction:column;gap:4px;padding:12px 14px 14px}
+.menu-card strong{font-weight:500;font-size:clamp(15px,1vw,26px)}
+.menu-card em{font-size:clamp(15px,1vw,26px);color:var(--stone)}
+.menu-card:hover,.menu-card:focus-visible{outline:2px solid var(--tiffany);outline-offset:2px}
+.menu-foot{position:fixed;left:0;right:0;bottom:0;padding:16px clamp(16px,6vw,230px) calc(16px + env(safe-area-inset-bottom));background:linear-gradient(0deg,rgba(17,22,23,1) 60%,rgba(17,22,23,0))}
+.menu-home{min-height:52px;width:min(100%,420px);border-radius:999px;background:var(--paper)!important;color:var(--ink)!important;font-size:16px;font-weight:500}
+/* schermi verticali (telefono, iPad in verticale): testi leggibili e impaginazione in colonna */
+@media (orientation:portrait){
+  body{--mx:6vw}
+  .title{font-size:clamp(30px,9vw,72px)}
+  .title.small{font-size:clamp(22px,6.4vw,48px)}
+  .kicker,.tv-deck,.tv-count,.tag,.steps{font-size:clamp(10px,2.6vw,16px)}
+  .text,.keys,.service ul{font-size:clamp(14px,3.8vw,22px);max-width:none}
+  .copy{max-width:88vw;bottom:9vh}
+  .tv-mark{width:clamp(48px,12vw,90px)}
+  .split{grid-template-columns:1fr;grid-template-rows:62vh 1fr}
+  .split .panel{height:62vh;order:-1}
+  .split .panel img{width:100%;height:100%;object-fit:cover}
+  .split .copy{margin:4vh var(--mx);align-self:start}
+  .service{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .service .copy{margin:12vh var(--mx) 3vh}
+  .service .title{font-size:clamp(30px,9vw,72px)}
+  .claim{font-size:clamp(20px,6vw,40px)}
+  .steps{grid-template-columns:repeat(3,1fr);row-gap:1.2vh}
+  .step .copy{bottom:20vh}
+}
+#explore:focus-visible,.menu button:focus-visible{outline:2px solid var(--tiffany);outline-offset:3px}
