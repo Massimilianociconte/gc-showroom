@@ -91,7 +91,7 @@ body.hide-chrome #chrome{opacity:0}
 /* ── Sito statico (GitHub Pages): menu dei contenuti, tocco e mouse ── */
 body.static{cursor:default}
 body.static.idle{cursor:none}
-#explore{position:fixed;left:var(--mx);bottom:5.5vh;z-index:20;min-height:48px;padding:0 22px;border:1px solid rgba(243,241,235,.5);border-radius:999px;
+#explore{position:fixed;right:var(--mx);top:5vh;z-index:20;min-height:48px;padding:0 22px;border:1px solid rgba(243,241,235,.5);border-radius:999px;
   background:rgba(23,29,30,.55);color:var(--paper);font:600 12px/1 "Jost",sans-serif;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;
   transition:opacity .6s var(--ease)}
 body.idle #explore,body.menu-open #explore{opacity:0;pointer-events:none}
