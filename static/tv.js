@@ -43,6 +43,7 @@ function send(body) {
 let mse = null;
 
 function setVideo(q) {
+  if (!LIB.stream?.[q] && !LIB.video?.[q]) q = Object.keys(LIB.stream || {})[0] || Object.keys(LIB.video || {})[0];  // qualità disponibile
   const key = LIB.stream?.[q] ? `mse:${q}` : `mp4:${q}`;
   if (videoKey === key) return;
   videoKey = key;
